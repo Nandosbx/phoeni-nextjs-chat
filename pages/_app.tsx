@@ -3,6 +3,8 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Fragment, useEffect } from 'react'
 import Layout from '../components/Layout'
+import 'react-toastify/dist/ReactToastify.css'
+import { RecoilRoot } from 'recoil'
 
 export default function App({ Component, pageProps }: AppProps) {
 	useEffect(() => {
@@ -12,9 +14,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	return (
 		<Fragment>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<RecoilRoot>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</RecoilRoot>
 		</Fragment>
 	)
 }

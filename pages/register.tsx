@@ -7,9 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { IAcknowledgementResponse, IRegister } from '../src/interfaces'
 import axios from 'axios'
 import { routes } from '../src/routes'
-
-import { ToastContainer, toast, TypeOptions } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast, TypeOptions } from 'react-toastify'
+import { mutate } from 'swr'
 
 const Register = () => {
 	//Validation
@@ -65,9 +64,9 @@ const Register = () => {
 			} else if (resData.errors) {
 				notify(resData.errors.toString(), 'error')
 			}
-		} catch (error) {
-			console.error(error)
-			const caughtError: Error = error
+		} catch (err) {
+			console.error(err)
+			const caughtError: Error = err
 			console.log('caughtError => ', caughtError)
 			notify(caughtError.message, 'error')
 		}
@@ -76,7 +75,7 @@ const Register = () => {
 	return (
 		<div className='container'>
 			<p className='flow-text center'>Register</p>
-			<ToastContainer />
+
 			<form
 				className='col s12'
 				autoComplete='off'

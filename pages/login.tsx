@@ -7,8 +7,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { IAcknowledgementResponse, ILogin } from '../src/interfaces'
 import { routes } from '../src/routes'
 
-import { ToastContainer, toast, TypeOptions } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+import { toast, TypeOptions } from 'react-toastify'
+import { mutate } from 'swr'
 
 const Login = () => {
 	//Validation
@@ -50,12 +50,13 @@ const Login = () => {
 
 			if (resData.success) {
 				notify(resData.message, 'success')
-			} else {
-				notify(resData.message, 'warning')
+				mutate(routes.getMe)
+			} else if (resData.errors) {
+				notify(resData.errors.toString(), 'error')
 			}
-		} catch (error) {
-			console.error(error)
-			const caughtError: Error = error
+		} catch (err) {
+			console.error(err)
+			const caughtError: Error = err
 			console.log('caughtError => ', caughtError)
 			notify(caughtError.message, 'error')
 		}
@@ -64,7 +65,7 @@ const Login = () => {
 	return (
 		<div className='container'>
 			<p className='flow-text center'>Login</p>
-			<ToastContainer />
+
 			<form
 				className='col s12'
 				autoComplete='off'
